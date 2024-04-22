@@ -13,9 +13,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isLoggedIn = computed(() => user.value !== undefined && Object.keys(user.value).length !== 0)
   const router = useRouter()
+  const backendBaseUrl = useRuntimeConfig().public.laravelAuth.backendBaseUrl
 
   async function login(credentials: Credentials) {
-    const response = await $fetch('http://backoffice-api.lsmlocal.ru/managers/self/auth', {
+    const response = await $fetch(`${backendBaseUrl}/managers/self/auth`, {
       watch: false,
       method: 'POST',
       body: credentials,
@@ -32,7 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function fetchUser() {
     const authToken = useCookie('laravel_auth.token')
 
-    const response = await $fetch('http://backoffice-api.lsmlocal.ru/managers/self/detail', {
+    const response = await $fetch(`${backendBaseUrl}/managers/self/detail`, {
       headers: {
         Authorization: authToken.value,
         Accept: 'application/json',
@@ -47,7 +48,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout() {
     const authToken = useCookie('laravel_auth.token')
 
-    await $fetch('http://backoffice-api.lsmlocal.ru/managers/self/logout', {
+    await $fetch(`${backendBaseUrl}/managers/self/logout`, {
       method: 'POST',
       headers: {
         Authorization: authToken.value,

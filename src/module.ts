@@ -12,15 +12,15 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(options, nuxt) {
     await installModule('@pinia/nuxt')
 
-    const { resolve } = createResolver(import.meta.url)
+    nuxt.options.runtimeConfig.public.laravelAuth = {
+      backendBaseUrl: options.baseUrl,
+    }
 
     if (!Object.hasOwn(options, 'baseUrl')) {
       throw new Error('Missing `laravelAuth->baseUrl` in nuxt.config.json')
     }
 
-    nuxt.options.runtimeConfig.public.laravelAuth = {
-      backendBaseUrl: options.baseUrl,
-    }
+    const { resolve } = createResolver(import.meta.url)
 
     addPlugin(resolve('./runtime/plugin'))
     addImports([{
