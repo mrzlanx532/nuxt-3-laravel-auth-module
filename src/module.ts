@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, createResolver, addImports, addRouteMiddleware } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addImports, addRouteMiddleware, installModule } from '@nuxt/kit'
 
 export interface ModuleOptions {
   baseUrl: string
@@ -9,7 +9,9 @@ export default defineNuxtModule<ModuleOptions>({
     name: 'laravel-auth',
     configKey: 'laravelAuth',
   },
-  setup(options, nuxt) {
+  async setup(options, nuxt) {
+    await installModule('@pinia/nuxt')
+
     const { resolve } = createResolver(import.meta.url)
 
     if (!Object.hasOwn(options, 'baseUrl')) {

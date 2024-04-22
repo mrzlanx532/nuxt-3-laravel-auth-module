@@ -1,6 +1,6 @@
-import { defineStore } from "pinia"
+import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { useFetch, useCookie, useRouter } from "#imports";
+import { useFetch, useCookie, useRouter } from '#imports'
 
 type Credentials = {
   email: string
@@ -10,7 +10,8 @@ type Credentials = {
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<any>({})
-  const isLoggedIn = computed(() => !!user.value)
+
+  const isLoggedIn = computed(() => Object.keys(user.value).length !== 0)
   const router = useRouter()
 
   async function login(credentials: Credentials) {

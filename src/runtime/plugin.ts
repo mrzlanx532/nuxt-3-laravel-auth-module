@@ -1,3 +1,5 @@
+import { useAuthStore } from "./stores/useAuthStore";
+
 export default defineNuxtPlugin((nuxtApp: any) => {
   const authToken = useCookie('auth_token')
 
@@ -15,6 +17,7 @@ export default defineNuxtPlugin((nuxtApp: any) => {
   return {
     provide: {
       authFetch: $authFetch,
+      auth: useAuthStore,
     },
   }
 })
