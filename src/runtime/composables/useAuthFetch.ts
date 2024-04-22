@@ -7,7 +7,7 @@ export function useAuthFetch<T>(path: string, options: UseFetchOptions<T> = {}) 
     'Accept': 'application/json',
   }
 
-  const authToken = useCookie('auth_token')
+  const authToken = useCookie('laravel_auth.token')
 
   if (authToken.value) {
     headers['Authorization'] = authToken

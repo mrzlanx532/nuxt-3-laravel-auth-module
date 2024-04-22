@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { useFetch, useCookie, useRouter } from '#imports'
+import { useCookie, useRouter, useRuntimeConfig } from '#imports'
 
 type Credentials = {
   email: string
@@ -11,7 +11,7 @@ type Credentials = {
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<any>({})
 
-  const isLoggedIn = computed(() => Object.keys(user.value).length !== 0)
+  const isLoggedIn = computed(() => user.value !== undefined && Object.keys(user.value).length !== 0)
   const router = useRouter()
 
   async function login(credentials: Credentials) {
@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
       body: credentials,
     })
 
-    const authToken = useCookie('auth_token')
+    const authToken = useCookie('laravel_auth.token')
 
     user.value = response.user
     authToken.value = `Bearer ${response.token}`
@@ -30,7 +30,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function fetchUser() {
-    const authToken = useCookie('auth_token')
+    const authToken = useCookie('laravel_auth.token')
 
     const response = await $fetch('http://backoffice-api.lsmlocal.ru/managers/self/detail', {
       headers: {
@@ -45,7 +45,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function logout() {
-    const authToken = useCookie('auth_token')
+    const authToken = useCookie('laravel_auth.token')
 
     await $fetch('http://backoffice-api.lsmlocal.ru/managers/self/logout', {
       method: 'POST',
