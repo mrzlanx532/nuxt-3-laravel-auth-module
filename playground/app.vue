@@ -5,14 +5,12 @@
 </template>
 
 <script setup>
-import { useNuxtApp } from '#app'
-
 try {
-  const { $customFetch } = useNuxtApp()
+  const test = await useAuthFetch('users/browse')
 
-  const test = await $customFetch('users/browse')
+  console.log(test)
+
 } catch (err) {
   console.error(err)
 }
-
 </script>

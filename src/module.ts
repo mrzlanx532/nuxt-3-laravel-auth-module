@@ -1,21 +1,38 @@
-import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addImports, addRouteMiddleware } from '@nuxt/kit'
 
-// Module options TypeScript interface definition
-export interface ModuleOptions {}
+export interface ModuleOptions {
+  baseUrl: string
+}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'laravel-auth',
     configKey: 'laravelAuth',
   },
-  setup(options: any, nuxt: any) {
+  setup(options, nuxt) {
+    const { resolve } = createResolver(import.meta.url)
 
-    nuxt.options.runtimeConfig.public.laravelAuth = {
-      backendBaseUrl: options.baseUrl || 'http://localhost/',
+    if (!Object.hasOwn(options, 'baseUrl')) {
+      throw new Error('Missing `laravelAuth->baseUrl` in nuxt.config.json')
     }
 
-    const resolver = createResolver(import.meta.url)
+    nuxt.options.runtimeConfig.public.laravelAuth = {
+      backendBaseUrl: options.baseUrl,
+    }
 
-    addPlugin(resolver.resolve('./runtime/plugin'))
+    addPlugin(resolve('./runtime/plugin'))
+    addImports([{
+      name: 'useAuthFetch',
+      as: 'useAuthFetch',
+      from: resolve('./runtime/composables/useAuthFetch'),
+    }])
+    addRouteMiddleware({
+      name: 'auth',
+      path: resolve('./runtime/middleware/auth'),
+    })
+    addRouteMiddleware({
+      name: 'guest',
+      path: resolve('./runtime/middleware/guest'),
+    })
   },
 })

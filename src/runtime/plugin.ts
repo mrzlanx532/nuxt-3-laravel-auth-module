@@ -1,26 +1,20 @@
-export default defineNuxtPlugin((nuxtApp) => {
-
+export default defineNuxtPlugin((nuxtApp: any) => {
   const authToken = useCookie('auth_token')
 
-  const $customFetch = $fetch.create({
+  const $authFetch = $fetch.create({
     baseURL: nuxtApp.$config.public.laravelAuth.backendBaseUrl,
-    onRequest({ request, options, error }) {
+    onRequest({ options }) {
       if (authToken.value) {
         // Add Authorization header
         options.headers = options.headers || {}
         options.headers['Authorization'] = `Bearer ${authToken.value}`
       }
     },
-    onResponseError({ response }) {
-      if (response.status === 401) {
-        return navigateTo('/login')
-      }
-    },
   })
 
   return {
     provide: {
-      customFetch: $customFetch,
+      authFetch: $authFetch,
     },
   }
 })
