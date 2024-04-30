@@ -1,4 +1,5 @@
 import { useAuthStore } from "./stores/useAuthStore";
+import { useCookie } from '#imports'
 
 export default defineNuxtPlugin(async (nuxtApp: any) => {
   const authToken = useCookie('laravel_auth.token')
@@ -7,7 +8,6 @@ export default defineNuxtPlugin(async (nuxtApp: any) => {
     baseURL: nuxtApp.$config.public.laravelAuth.backendBaseUrl,
     onRequest({ options }) {
       if (authToken.value) {
-        // Add Authorization header
         options.headers = options.headers || {}
         options.headers['Authorization'] = `Bearer ${authToken.value}`
       }

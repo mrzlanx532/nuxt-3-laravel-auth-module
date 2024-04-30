@@ -9,6 +9,8 @@ type Credentials = {
 }
 
 export const useAuthStore = defineStore('auth', () => {
+
+  const { domain, endpoints, redirects } = useRuntimeConfig().public.laravelAuth
   const user = ref({})
 
   const isLoggedIn = computed(() => {
@@ -30,14 +32,12 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     if (newValue) {
-      navigateTo('/')
+      navigateTo(redirects.auth)
       return
     }
 
-    navigateTo('/login')
+    navigateTo(redirects.guest)
   })
-
-  const { domain, endpoints } = useRuntimeConfig().public.laravelAuth
 
   async function login(credentials: Credentials) {
     const response = await $fetch(`${domain}/${endpoints.login}`, {
