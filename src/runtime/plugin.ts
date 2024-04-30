@@ -1,5 +1,5 @@
 import { useAuthStore } from "./stores/useAuthStore";
-import { useCookie } from '#imports'
+import { useCookie, defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin(async (nuxtApp: any) => {
   const authToken = useCookie('laravel_auth.token')

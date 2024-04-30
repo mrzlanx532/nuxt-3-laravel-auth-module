@@ -1,5 +1,6 @@
 import type { UseFetchOptions } from '#imports'
 import { useFetch, useCookie, useNuxtApp, useRuntimeConfig } from '#imports'
+import { ofetch } from 'ofetch' // Хак, без этого не работает при публикации пакета npm
 
 export function useAuthFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
   const headers: any = {
