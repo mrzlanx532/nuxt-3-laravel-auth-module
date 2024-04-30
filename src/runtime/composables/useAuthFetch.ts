@@ -1,4 +1,4 @@
-import type { UseFetchOptions } from 'nuxt/app'
+import type { UseFetchOptions } from '#imports'
 import { useFetch, useCookie, useNuxtApp, useRuntimeConfig } from '#imports'
 
 export function useAuthFetch<T>(path: string, options: UseFetchOptions<T> = {}) {

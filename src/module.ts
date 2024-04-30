@@ -3,7 +3,7 @@ import { defineNuxtModule, addPlugin, createResolver, addImports, addRouteMiddle
 export interface ModuleOptions {
   domain: string
   redirects: {
-    auth: '/',
+    auth: '/'
     guest: '/login'
   }
   endpoints: {

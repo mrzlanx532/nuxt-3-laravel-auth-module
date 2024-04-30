@@ -1,8 +1,11 @@
 {
-  "name": "my-module",
-  "version": "1.0.0",
-  "description": "My new Nuxt module",
-  "repository": "your-org/my-module",
+  "name": "laravel-auth",
+  "version": "0.0.1",
+  "description": "Laravel auth nuxt 3 module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrzlanx532/nuxt-3-laravel-auth-module.git"
+  },
   "license": "MIT",
   "type": "module",
   "exports": {
