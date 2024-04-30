@@ -4,6 +4,10 @@
 export default defineNuxtConfig({
   laravelAuth: {
     domain: 'http://subdomain.domain',
+    redirects: {
+      auth: '/',
+      guest: '/login',
+    },
     endpoints: {
       login: 'managers/self/auth',
       logout: 'managers/self/logout',

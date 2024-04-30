@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     domain: 'http://backoffice-api.lsmlocal.ru',
     redirects: {
       auth: '/',
-      guest: '/login'
+      guest: '/login',
     },
     endpoints: {
       login: 'managers/self/auth',
