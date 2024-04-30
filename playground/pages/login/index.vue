@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useNuxtApp } from '#app'
 
 definePageMeta({
@@ -10,8 +10,8 @@ const { $auth } = useNuxtApp()
 const email = ref('denis_danilov_97@mail.ru')
 const password = ref('4aWvh75t')
 
-const onAuthorize = () => {
-  $auth().login({
+const onAuthorize = async () => {
+  await $auth().login({
     email: email.value,
     password: password.value,
   })

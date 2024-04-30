@@ -8,6 +8,10 @@ definePageMeta({
 const { $auth } = useNuxtApp()
 
 const user = $auth().user
+
+async function logout() {
+  await $auth().logout()
+}
 </script>
 
 <template>
@@ -16,5 +20,8 @@ const user = $auth().user
     <p>
       {{ user }}
     </p>
+    <button @click="logout">
+      Выйти
+    </button>
   </div>
 </template>

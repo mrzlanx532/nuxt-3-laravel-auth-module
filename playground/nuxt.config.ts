@@ -2,6 +2,12 @@ export default defineNuxtConfig({
   modules: ['../src/module'],
   devtools: { enabled: true },
   laravelAuth: {
-    baseUrl: 'http://backoffice-api.lsmlocal.ru',
+    domain: 'http://backoffice-api.lsmlocal.ru',
+    endpoints: {
+      login: 'managers/self/auth',
+      logout: 'managers/self/logout',
+      fetchUser: 'managers/self/detail',
+      register: '/',
+    },
   },
 })
