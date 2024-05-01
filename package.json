@@ -1,6 +1,6 @@
 {
   "name": "@mrzlanx532/laravel-auth",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Laravel auth nuxt 3 module",
   "repository": {
     "type": "git",

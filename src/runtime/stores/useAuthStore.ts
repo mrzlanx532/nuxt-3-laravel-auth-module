@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
-import { navigateTo, useCookie, useRuntimeConfig, useFetch } from '#imports'
+import { navigateTo, useCookie, useRuntimeConfig, useFetch, useNuxtApp } from '#imports'
 
 type Credentials = {
   email: string
@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const { domain, endpoints, redirects } = useRuntimeConfig().public.laravelAuth
   const user = ref({})
+  const nuxtApp = useNuxtApp()
 
   const isLoggedIn = computed(() => {
     if (user.value === undefined) {
@@ -32,11 +33,11 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     if (newValue) {
-      navigateTo(redirects.auth)
+      nuxtApp.runWithContext(() => navigateTo(redirects.auth as string))
       return
     }
 
-    navigateTo(redirects.guest)
+    nuxtApp.runWithContext(() => navigateTo(redirects.guest as string))
   })
 
   async function login(credentials: Credentials) {
