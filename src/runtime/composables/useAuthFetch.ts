@@ -1,9 +1,9 @@
+import { ofetch } from 'ofetch' // Хак, без этого не работает при публикации пакета npm
 import type { UseFetchOptions } from '#imports'
 import { useFetch, useCookie, useNuxtApp, useRuntimeConfig } from '#imports'
-import { ofetch } from 'ofetch' // Хак, без этого не работает при публикации пакета npm
 
 export function useAuthFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
-  const headers: any = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   }
@@ -11,11 +11,11 @@ export function useAuthFetch<T>(path: string, options: UseFetchOptions<T> = {}) 
   const authToken = useCookie('laravel_auth.token')
 
   if (authToken.value) {
-    headers['Authorization'] = authToken
+    headers['Authorization'] = authToken.value
   }
 
   const runtimeConfig = useRuntimeConfig()
-  const backendBaseUrl = runtimeConfig.public.laravelAuth.backendBaseUrl
+  const backendBaseUrl: string = runtimeConfig.public.laravelAuth.backendBaseUrl
 
   return useFetch(`${backendBaseUrl}/${path}`, {
     watch: false,
