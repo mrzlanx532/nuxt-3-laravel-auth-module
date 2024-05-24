@@ -9,7 +9,6 @@ type Credentials = {
 }
 
 export const useAuthStore = defineStore('auth', () => {
-
   const { domain, endpoints, redirects } = useRuntimeConfig().public.laravelAuth
   const user = ref({})
   const nuxtApp = useNuxtApp()
@@ -26,8 +25,7 @@ export const useAuthStore = defineStore('auth', () => {
     return Object.keys(user.value).length > 0
   })
 
-  watch(isLoggedIn, async (newValue, prev) => {
-
+  watch(isLoggedIn, async (newValue) => {
     if (import.meta.server) {
       return
     }
@@ -60,16 +58,16 @@ export const useAuthStore = defineStore('auth', () => {
       return
     }
 
-    const { data } = await useFetch(`${domain}/${endpoints.fetchUser}`, {
+    const response = await useFetch(`${domain}/${endpoints.fetchUser}`, {
       headers: {
         Authorization: authToken.value,
         Accept: 'application/json',
       },
-    }).catch(err => {
+    }).catch((err) => {
       console.log(err)
     })
 
-    user.value = data.value
+    user.value = response?.data.value
   }
 
   async function logout() {
@@ -85,7 +83,7 @@ export const useAuthStore = defineStore('auth', () => {
         Authorization: authToken.value,
         Accept: 'application/json',
       },
-    }).catch(err => {
+    }).catch((err) => {
       console.log(err)
     })
 
