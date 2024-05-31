@@ -8,6 +8,10 @@ export function useAuthFetch<T>(path: string, options: UseFetchOptions<T> = {}) 
     'Accept': 'application/json',
   }
 
+  if (options.body instanceof FormData) {
+    delete headers['Content-Type']
+  }
+
   const authToken = useCookie('laravel_auth.token')
 
   if (authToken.value) {
