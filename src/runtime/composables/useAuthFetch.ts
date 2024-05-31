@@ -4,12 +4,11 @@ import { useFetch, useCookie, useNuxtApp, useRuntimeConfig } from '#imports'
 
 export function useAuthFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    Accept: 'application/json',
   }
 
-  if (options.body instanceof FormData) {
-    delete headers['Content-Type']
+  if (!(options.body instanceof FormData)) {
+    headers['Content-Type'] = 'application/json'
   }
 
   const authToken = useCookie('laravel_auth.token')
