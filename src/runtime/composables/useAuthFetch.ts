@@ -1,3 +1,4 @@
+import { ofetch } from 'ofetch' // Хак, без этого не работает при публикации пакета npm
 import { useFetch, useCookie, useNuxtApp, useRuntimeConfig } from '#imports'
 
 export function useAuthFetch(path: string, options = {}) {
