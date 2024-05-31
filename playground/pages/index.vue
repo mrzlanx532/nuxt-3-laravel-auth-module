@@ -5,12 +5,24 @@ definePageMeta({
   middleware: ['auth'],
 })
 
-const { $auth } = useNuxtApp()
+const { $auth, $authFetch } = useNuxtApp()
 
 const user = $auth().user
 
 async function logout() {
   await $auth().logout()
+}
+
+const test = () => {
+  const fd = new FormData()
+
+  $authFetch('https://backoffice-api.lsmdev.ru/users/create', {
+    method: 'POST',
+    body: fd,
+    headers: {
+      'X-API': 'application/json',
+    },
+  })
 }
 </script>
 
@@ -20,6 +32,7 @@ async function logout() {
     <p>
       {{ user }}
     </p>
+    <button @click="test">Чек</button>
     <button @click="logout">
       Выйти
     </button>
