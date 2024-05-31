@@ -1,8 +1,6 @@
-import { ofetch } from 'ofetch' // Хак, без этого не работает при публикации пакета npm
-import type { UseFetchOptions } from '#imports'
 import { useFetch, useCookie, useNuxtApp, useRuntimeConfig } from '#imports'
 
-export function useAuthFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
+export function useAuthFetch(path: string, options = {}) {
   const headers: Record<string, string> = {
     Accept: 'application/json',
   }
