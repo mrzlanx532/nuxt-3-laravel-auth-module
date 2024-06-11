@@ -1,4 +1,4 @@
-import { ofetch } from 'ofetch' // Хак, без этого не работает при публикации пакета npm
+import type {} from 'ofetch'
 import { useFetch, useCookie, useNuxtApp, useRuntimeConfig } from '#imports'
 
 export function useAuthFetch(path: string, options = {}) {
@@ -6,6 +6,7 @@ export function useAuthFetch(path: string, options = {}) {
     Accept: 'application/json',
   }
 
+  // @ts-expect-error: difficult to type
   if (!(options.body instanceof FormData)) {
     headers['Content-Type'] = 'application/json'
   }
@@ -25,6 +26,7 @@ export function useAuthFetch(path: string, options = {}) {
     $fetch: useNuxtApp().$authFetch,
     headers: {
       ...headers,
+      // @ts-expect-error: difficult to type
       ...options?.headers,
     },
   })
