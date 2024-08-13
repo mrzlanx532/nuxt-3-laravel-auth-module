@@ -2,11 +2,10 @@ import { useAuthStore } from './stores/useAuthStore'
 import { useCookie, defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
-  const authToken = useCookie('laravel_auth.token')
-
   const $authFetch = $fetch.create({
     baseURL: nuxtApp.$config.public.laravelAuth.backendBaseUrl,
     onRequest({ options }) {
+      const authToken = useCookie('laravel_auth.token')
       const headers: HeadersInit = {
         Accept: 'application/json',
       }

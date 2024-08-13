@@ -16,7 +16,7 @@ async function logout() {
 const test = () => {
   const fd = new FormData()
 
-  $authFetch('https://backoffice-api.lsmdev.ru/users/create', {
+  $authFetch('http://backoffice-api.lsmlocal.ru/users/create', {
     method: 'POST',
     body: fd,
     headers: {
