@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, createResolver, addImports, addRouteMiddleware, installModule } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addImports, addRouteMiddleware } from '@nuxt/kit'
 
 export interface ModuleOptions {
   domain: string
@@ -14,14 +14,27 @@ export interface ModuleOptions {
   }
 }
 
+const defaultModuleOptions: ModuleOptions = {
+  domain: 'http://localhost',
+  endpoints: {
+    login: 'login',
+    logout: 'logout',
+    fetchUser: 'fetchUser',
+    register: 'register',
+  },
+  redirects: {
+    auth: '/',
+    guest: '/login',
+  },
+}
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'laravel-auth',
     configKey: 'laravelAuth',
   },
+  defaults: defaultModuleOptions,
   async setup(options, nuxt) {
-    await installModule('@pinia/nuxt')
-
     nuxt.options.runtimeConfig.public.laravelAuth = options
 
     const { resolve } = createResolver(import.meta.url)

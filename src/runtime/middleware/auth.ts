@@ -1,10 +1,9 @@
-import { useAuthStore } from './../stores/useAuthStore'
-import { navigateTo, defineNuxtRouteMiddleware } from '#imports'
+import { navigateTo, defineNuxtRouteMiddleware, useState, useRuntimeConfig } from '#imports'
 
 export default defineNuxtRouteMiddleware(() => {
-  const auth = useAuthStore()
+  const { redirects } = useRuntimeConfig().public.laravelAuth
 
-  if (!auth.isLoggedIn) {
-    return navigateTo('/login', { replace: true })
+  if (useState('auth').value === null) {
+    return navigateTo(redirects.guest, { replace: true })
   }
 })
