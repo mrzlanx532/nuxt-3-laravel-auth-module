@@ -3,7 +3,7 @@ import { useCookie, defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   const authFetch = $fetch.create({
-    baseURL: nuxtApp.$config.public.laravelAuth.backendBaseUrl,
+    baseURL: nuxtApp.$config.public.laravelAuth.domain,
     onRequest({ options }) {
       const authToken = useCookie('laravel_auth.token')
       const headers: HeadersInit = {

@@ -18,7 +18,7 @@ export function useAuthFetch(path: string, options = {}) {
   }
 
   const runtimeConfig = useRuntimeConfig()
-  const backendBaseUrl: string = runtimeConfig.public.laravelAuth.backendBaseUrl
+  const backendBaseUrl: string = runtimeConfig.public.laravelAuth.domain
 
   return useFetch(`${backendBaseUrl}/${path}`, {
     watch: false,
