@@ -2,15 +2,15 @@ import { defineNuxtModule, addPlugin, createResolver, addImports, addRouteMiddle
 
 export interface ModuleOptions {
   domain: string
-  redirects: {
-    auth: '/'
-    guest: '/login'
-  }
   endpoints: {
     login: string
     logout: string
     fetchUser: string
-    register?: string
+    register: string
+  }
+  redirects: {
+    auth: string
+    guest: string
   }
 }
 
