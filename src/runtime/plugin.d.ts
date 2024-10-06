@@ -5,5 +5,3 @@ declare module '#app' {
     $authFetch: $Fetch<unknown, NitroFetchRequest>
   }
 }
-
-export {}
