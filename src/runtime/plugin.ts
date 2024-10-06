@@ -1,8 +1,9 @@
+import { type $Fetch, type NitroFetchRequest } from 'nitropack'
 import { useAuthStore } from './stores/useAuthStore'
 import { useCookie, defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
-  const authFetch = $fetch.create({
+  const authFetch: $Fetch<unknown, NitroFetchRequest> = $fetch.create({
     baseURL: nuxtApp.$config.public.laravelAuth.domain,
     onRequest({ options }) {
       const authToken = useCookie('laravel_auth.token')
