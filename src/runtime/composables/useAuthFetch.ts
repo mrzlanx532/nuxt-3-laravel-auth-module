@@ -1,13 +1,14 @@
 import type {} from 'ofetch'
 import { useFetch, useCookie, useNuxtApp, useRuntimeConfig } from '#imports'
 
-export function useAuthFetch(path: string, options = {}) {
+type useFetchArgs = Parameters<typeof useFetch>
+
+export function useAuthFetch(request: useFetchArgs[0], opts: useFetchArgs[1] = {}) {
   const headers: Record<string, string> = {
     Accept: 'application/json',
   }
 
-  // @ts-expect-error: difficult to type
-  if (!(options.body instanceof FormData)) {
+  if (!(opts.body instanceof FormData)) {
     headers['Content-Type'] = 'application/json'
   }
 
@@ -20,14 +21,13 @@ export function useAuthFetch(path: string, options = {}) {
   const runtimeConfig = useRuntimeConfig()
   const backendBaseUrl: string = runtimeConfig.public.laravelAuth.domain
 
-  return useFetch(`${backendBaseUrl}/${path}`, {
+  return useFetch(`${backendBaseUrl}/${request}`, {
     watch: false,
-    ...options,
+    ...opts,
     $fetch: useNuxtApp().$authFetch,
     headers: {
       ...headers,
-      // @ts-expect-error: difficult to type
-      ...options?.headers,
+      ...opts?.headers,
     },
   })
 }
