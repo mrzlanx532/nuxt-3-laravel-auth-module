@@ -34,7 +34,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   return {
     provide: {
-      authFetch,
+      authFetch: authFetch,
       auth: useAuthStore,
     },
   }
