@@ -1,6 +1,6 @@
 {
   "name": "@mrzlanx532/nuxt-3-laravel-auth-module",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "Laravel auth nuxt 3 module",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "@nuxt/kit": "^3.11.2"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^1.1.5",
+    "@nuxt/devtools": "1.3.9",
     "@nuxt/eslint-config": "^0.3.6",
     "@nuxt/module-builder": "^0.5.5",
     "@nuxt/schema": "^3.11.2",
@@ -42,7 +42,7 @@
     "@types/node": "^20.12.7",
     "changelogen": "^0.5.5",
     "eslint": "^9.0.0",
-    "nuxt": "^3.11.2",
+    "nuxt": "3.12.4",
     "typescript": "^5.4.5",
     "vitest": "^1.4.0"
   }

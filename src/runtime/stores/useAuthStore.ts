@@ -1,4 +1,4 @@
-import { watch } from 'vue'
+import { type Ref, watch } from 'vue'
 import { navigateTo, useCookie, useRuntimeConfig, useFetch, useNuxtApp, useState } from '#imports'
 
 type Credentials = {
@@ -7,7 +7,14 @@ type Credentials = {
   is_remember?: boolean
 }
 
-export const useAuthStore = () => {
+export interface IUseAuthStore {
+  user: Ref<null>
+  login: (credentials: Credentials) => Promise<void>
+  fetchUser: () => Promise<void>
+  logout: () => Promise<void>
+}
+
+export const useAuthStore = (): IUseAuthStore => {
   const { domain, endpoints, redirects } = useRuntimeConfig().public.laravelAuth
   const user = useState('auth', () => null)
 
@@ -52,7 +59,7 @@ export const useAuthStore = () => {
         Accept: 'application/json',
       },
     }).catch((err) => {
-      console.log(err)
+      console.error(err)
     })
 
     user.value = response?.data.value
