@@ -1,4 +1,5 @@
 import { defineNuxtModule, addPlugin, createResolver, addImports, addRouteMiddleware } from '@nuxt/kit'
+import type { Nuxt } from '@nuxt/schema'
 
 export interface ModuleOptions {
   domain: string
@@ -34,7 +35,7 @@ export default defineNuxtModule<ModuleOptions>({
     configKey: 'laravelAuth',
   },
   defaults: defaultModuleOptions,
-  async setup(options, nuxt) {
+  async setup(options: ModuleOptions, nuxt: Nuxt) {
     nuxt.options.runtimeConfig.public.laravelAuth = options
 
     const { resolve } = createResolver(import.meta.url)
