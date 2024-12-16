@@ -7,16 +7,16 @@ type Credentials = {
   is_remember?: boolean
 }
 
-export interface IUseAuthStore {
-  user: Ref<null>
+export interface IUseAuthStore<IUser = never> {
+  user: Ref<IUser | null>
   login: (credentials: Credentials) => Promise<void>
   fetchUser: () => Promise<void>
   logout: () => Promise<void>
 }
 
-export const useAuthStore = (): IUseAuthStore => {
+export const useAuthStore = <IUser = never>(): IUseAuthStore<IUser> => {
   const { domain, endpoints, redirects } = useRuntimeConfig().public.laravelAuth
-  const user = useState('auth', () => null)
+  const user = useState<IUser | null>('auth', () => null)
 
   const nuxtApp = useNuxtApp()
 
