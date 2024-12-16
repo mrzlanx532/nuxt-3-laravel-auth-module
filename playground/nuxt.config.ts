@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
   devtools: { enabled: false },
+
   laravelAuth: {
     domain: 'http://backoffice-api.lsmlocal.ru',
     redirects: {
@@ -14,4 +15,6 @@ export default defineNuxtConfig({
       register: '/',
     },
   },
+
+  compatibilityDate: '2024-12-16',
 })

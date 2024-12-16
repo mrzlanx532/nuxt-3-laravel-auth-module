@@ -26,10 +26,13 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     },
   })
 
-  const auth = useAuthStore()
+  const {
+    getUser,
+    fetchUser,
+  } = useAuthStore()
 
-  if (auth.user.value === null) {
-    await auth.fetchUser()
+  if (getUser().value === null) {
+    await fetchUser()
   }
 
   return {

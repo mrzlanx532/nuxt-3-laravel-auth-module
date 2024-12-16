@@ -11,12 +11,12 @@ export interface IUseAuthStore {
   login: (credentials: Credentials) => Promise<void>
   fetchUser: () => Promise<void>
   logout: () => Promise<void>
-  getUser: <T = unknown>() => Ref<T>
+  getUser: <T = unknown>() => Ref<T | null>
 }
 
 export const useAuthStore = (): IUseAuthStore => {
   const { domain, endpoints, redirects } = useRuntimeConfig().public.laravelAuth
-  const user = useState('auth', () => null)
+  const user = useState<unknown | null>('auth', () => null)
 
   const nuxtApp = useNuxtApp()
 
@@ -34,7 +34,7 @@ export const useAuthStore = (): IUseAuthStore => {
   })
 
   const getUser = <T = unknown>() => {
-    return user as Ref<T>
+    return useState<T | null>('auth', () => null)
   }
 
   async function login(credentials: Credentials) {
