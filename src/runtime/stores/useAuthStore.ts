@@ -15,7 +15,7 @@ export interface IUseAuthStore {
 }
 
 export const useAuthStore = (): IUseAuthStore => {
-  const { domain, endpoints, redirects } = useRuntimeConfig().public.laravelAuth
+  const { domain, endpoints, redirects, isSaveRequestedPath } = useRuntimeConfig().public.laravelAuth
   const user = useState<unknown | null>('auth', () => null)
 
   const nuxtApp = useNuxtApp()
@@ -26,7 +26,11 @@ export const useAuthStore = (): IUseAuthStore => {
     }
 
     if (newValue) {
-      nuxtApp.runWithContext(() => navigateTo(redirects.auth as string))
+      const savedPath = useCookie('laravel_auth.unauthorized_requested_path')
+
+      nuxtApp.runWithContext(() => navigateTo(isSaveRequestedPath && savedPath.value ? savedPath.value : redirects.auth as string))
+
+      savedPath.value = undefined
       return
     }
 

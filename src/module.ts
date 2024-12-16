@@ -13,6 +13,7 @@ export interface ModuleOptions {
     auth: string
     guest: string
   }
+  isSaveRequestedPath: boolean
 }
 
 const defaultModuleOptions: ModuleOptions = {
@@ -27,6 +28,7 @@ const defaultModuleOptions: ModuleOptions = {
     auth: '/',
     guest: '/login',
   },
+  isSaveRequestedPath: true,
 }
 
 export default defineNuxtModule<ModuleOptions>({
