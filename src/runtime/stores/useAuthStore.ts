@@ -7,18 +7,16 @@ type Credentials = {
   is_remember?: boolean
 }
 
-type IUser<T = unknown> = Ref<T | null>
-
 export interface IUseAuthStore {
-  user: IUser
   login: (credentials: Credentials) => Promise<void>
   fetchUser: () => Promise<void>
   logout: () => Promise<void>
+  getUser: <T = unknown>() => Ref<T>
 }
 
 export const useAuthStore = (): IUseAuthStore => {
   const { domain, endpoints, redirects } = useRuntimeConfig().public.laravelAuth
-  const user: IUser = useState('auth', () => null)
+  const user = useState('auth', () => null)
 
   const nuxtApp = useNuxtApp()
 
@@ -34,6 +32,10 @@ export const useAuthStore = (): IUseAuthStore => {
 
     nuxtApp.runWithContext(() => navigateTo(redirects.guest as string))
   })
+
+  const getUser = <T = unknown>() => {
+    return user as Ref<T>
+  }
 
   async function login(credentials: Credentials) {
     const response = await $fetch(`${domain}/${endpoints.login}`, {
@@ -89,7 +91,9 @@ export const useAuthStore = (): IUseAuthStore => {
   }
 
   return {
-    user,
-    login, fetchUser, logout,
+    login,
+    logout,
+    fetchUser,
+    getUser,
   }
 }
