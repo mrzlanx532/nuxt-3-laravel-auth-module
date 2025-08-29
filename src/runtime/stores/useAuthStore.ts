@@ -61,16 +61,18 @@ export const useAuthStore = (): IUseAuthStore => {
       return
     }
 
-    const response = await useFetch(`${domain}/${endpoints.fetchUser}`, {
+    const { data, error } = await useFetch(`${domain}/${endpoints.fetchUser}`, {
       headers: {
         Authorization: authToken.value,
         Accept: 'application/json',
       },
-    }).catch((err) => {
-      console.error(err)
     })
 
-    user.value = response?.data.value
+    if (error.value?.statusCode === 401) {
+      authToken.value = null
+    }
+
+    user.value = data.value
   }
 
   async function logout() {
